@@ -980,6 +980,8 @@ cc.Director.prototype = {
 
             eventManager.frameUpdateListeners();
             this._totalFrames++;
+
+            this.updateFast();
         }
     },
 
@@ -990,6 +992,25 @@ cc.Director.prototype = {
     __fastOff: function (type, callback, target) {
         this.off(type, callback, target);
     },
+
+    customEngineInfo: 'custom engine from v2.2.3 v1',
+
+    _fastTime: 0,
+    fastRender () {
+        if (cc.game.getFrameRate() != 60) {
+            cc.game.setFrameRate(60);
+        }
+        this._fastTime = 0;
+    },
+
+    updateFast () {
+        if (cc.game.getFrameRate() == 60) {
+            this._fastTime++;
+            if (this._fastTime > 5) {
+                cc.game.setFrameRate(15);
+            }
+        }
+    }
 };
 
 // Event target

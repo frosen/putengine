@@ -119,6 +119,8 @@ function setPosition (newPosOrX, y, z) {
             this.emit(EventType.POSITION_CHANGED);
         }
     }
+
+    cc.director.fastRender();
 }
 
 function setScale (x, y, z) {
@@ -146,6 +148,8 @@ function setScale (x, y, z) {
             this.emit(EventType.SCALE_CHANGED);
         }
     }
+
+    cc.director.fastRender();
 }
 
 function _update3DFunction () {

@@ -730,6 +730,8 @@ let NodeDefines = {
                                 this.emit(EventType.POSITION_CHANGED);
                             }
                         }
+
+                        cc.director.fastRender();
                     }
                     else {
                         cc.error(ERR_INVALID_NUMBER, 'new x');
@@ -773,6 +775,8 @@ let NodeDefines = {
                                 this.emit(EventType.POSITION_CHANGED);
                             }
                         }
+
+                        cc.director.fastRender();
                     }
                     else {
                         cc.error(ERR_INVALID_NUMBER, 'new y');
@@ -833,6 +837,8 @@ let NodeDefines = {
                 if (this._eventMask & ROTATION_ON) {
                     this.emit(EventType.ROTATION_CHANGED);
                 }
+
+                cc.director.fastRender();
             }
         },
 
@@ -883,6 +889,8 @@ let NodeDefines = {
                     if (this._eventMask & ROTATION_ON) {
                         this.emit(EventType.ROTATION_CHANGED);
                     }
+
+                    cc.director.fastRender();
                 }
             },
         },
@@ -923,6 +931,8 @@ let NodeDefines = {
                     if (this._eventMask & ROTATION_ON) {
                         this.emit(EventType.ROTATION_CHANGED);
                     }
+
+                    cc.director.fastRender();
                 }
             },
         },
@@ -965,6 +975,8 @@ let NodeDefines = {
                     if (this._eventMask & SCALE_ON) {
                         this.emit(EventType.SCALE_CHANGED);
                     }
+
+                    cc.director.fastRender();
                 }
             },
         },
@@ -990,6 +1002,8 @@ let NodeDefines = {
                     if (this._eventMask & SCALE_ON) {
                         this.emit(EventType.SCALE_CHANGED);
                     }
+
+                    cc.director.fastRender();
                 }
             },
         },
@@ -1123,6 +1137,7 @@ let NodeDefines = {
                     if (this._eventMask & ANCHOR_ON) {
                         this.emit(EventType.ANCHOR_CHANGED);
                     }
+                    cc.director.fastRender();
                 }
             },
         },
@@ -1146,6 +1161,7 @@ let NodeDefines = {
                     if (this._eventMask & ANCHOR_ON) {
                         this.emit(EventType.ANCHOR_CHANGED);
                     }
+                    cc.director.fastRender();
                 }
             },
         },
@@ -1176,6 +1192,7 @@ let NodeDefines = {
                             this.emit(EventType.SIZE_CHANGED);
                         }
                     }
+                    cc.director.fastRender();
                 }
             },
         },
@@ -1206,6 +1223,7 @@ let NodeDefines = {
                             this.emit(EventType.SIZE_CHANGED);
                         }
                     }
+                    cc.director.fastRender();
                 }
             },
         },
@@ -2329,6 +2347,8 @@ let NodeDefines = {
                 this.emit(EventType.POSITION_CHANGED);
             }
         }
+
+        cc.director.fastRender();
     },
 
     /**
@@ -2385,6 +2405,7 @@ let NodeDefines = {
             if (this._eventMask & SCALE_ON) {
                 this.emit(EventType.SCALE_CHANGED);
             }
+            cc.director.fastRender();
         }
     },
 
@@ -2450,6 +2471,8 @@ let NodeDefines = {
                 if (CC_EDITOR) {
                     this._toEuler();
                 }
+
+                cc.director.fastRender();
             }
         }
     },
@@ -2510,6 +2533,7 @@ let NodeDefines = {
                 this.emit(EventType.SIZE_CHANGED);
             }
         }
+        cc.director.fastRender();
     },
 
     /**
@@ -2575,6 +2599,7 @@ let NodeDefines = {
         if (this._eventMask & ANCHOR_ON) {
             this.emit(EventType.ANCHOR_CHANGED);
         }
+        cc.director.fastRender();
     },
 
     /*
@@ -2666,6 +2691,7 @@ let NodeDefines = {
                 this.emit(EventType.POSITION_CHANGED);
             }
         }
+        cc.director.fastRender();
     },
 
     /*
@@ -2707,6 +2733,7 @@ let NodeDefines = {
             this._toEuler();
         }
         this.setLocalDirty(LocalDirtyFlag.ROTATION);
+        cc.director.fastRender();
     },
 
     /*
@@ -2744,6 +2771,7 @@ let NodeDefines = {
         }
         trs.fromScale(this._trs, _swsVec3);
         this.setLocalDirty(LocalDirtyFlag.SCALE);
+        cc.director.fastRender();
     },
 
     getWorldRT (out) {
