@@ -973,15 +973,23 @@ cc.Director.prototype = {
 
             // Render
             this.emit(cc.Director.EVENT_BEFORE_DRAW);
-            renderer.render(this._scene, this._deltaTime);
+
+            if (cc.sys.platform == cc.sys.MACOS) {
+                renderer.render(this._scene, this._deltaTime);
+            } else {
+                if (this._doR) {
+                    this._doR = false;
+                    for (const call of this._beforeRenderCalls)  call();
+                    renderer.render(this._scene, this._deltaTime);
+                    this._beforeRenderCalls.length = 0;
+                }
+            }
 
             // After draw
             this.emit(cc.Director.EVENT_AFTER_DRAW);
 
             eventManager.frameUpdateListeners();
             this._totalFrames++;
-
-            this.updateFast();
         }
     },
 
@@ -995,21 +1003,14 @@ cc.Director.prototype = {
 
     customEngineInfo: 'custom engine from v2.2.3 v1',
 
-    _fastTime: 0,
-    fastRender () {
-        if (cc.game.getFrameRate() != 60) {
-            cc.game.setFrameRate(60);
-        }
-        this._fastTime = 0;
+    _doR: true,
+    doRender () {
+        this._doR = true;
     },
 
-    updateFast () {
-        if (cc.game.getFrameRate() == 60) {
-            this._fastTime++;
-            if (this._fastTime > 5) {
-                cc.game.setFrameRate(15);
-            }
-        }
+    _beforeRenderCalls: [],
+    addBeforeRenderCall(call) {
+        this._beforeRenderCalls.push(call);
     }
 };
 

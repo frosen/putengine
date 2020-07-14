@@ -730,8 +730,6 @@ let NodeDefines = {
                                 this.emit(EventType.POSITION_CHANGED);
                             }
                         }
-
-                        cc.director.fastRender();
                     }
                     else {
                         cc.error(ERR_INVALID_NUMBER, 'new x');
@@ -775,8 +773,6 @@ let NodeDefines = {
                                 this.emit(EventType.POSITION_CHANGED);
                             }
                         }
-
-                        cc.director.fastRender();
                     }
                     else {
                         cc.error(ERR_INVALID_NUMBER, 'new y');
@@ -837,8 +833,6 @@ let NodeDefines = {
                 if (this._eventMask & ROTATION_ON) {
                     this.emit(EventType.ROTATION_CHANGED);
                 }
-
-                cc.director.fastRender();
             }
         },
 
@@ -889,8 +883,6 @@ let NodeDefines = {
                     if (this._eventMask & ROTATION_ON) {
                         this.emit(EventType.ROTATION_CHANGED);
                     }
-
-                    cc.director.fastRender();
                 }
             },
         },
@@ -931,8 +923,6 @@ let NodeDefines = {
                     if (this._eventMask & ROTATION_ON) {
                         this.emit(EventType.ROTATION_CHANGED);
                     }
-
-                    cc.director.fastRender();
                 }
             },
         },
@@ -975,8 +965,6 @@ let NodeDefines = {
                     if (this._eventMask & SCALE_ON) {
                         this.emit(EventType.SCALE_CHANGED);
                     }
-
-                    cc.director.fastRender();
                 }
             },
         },
@@ -1002,8 +990,6 @@ let NodeDefines = {
                     if (this._eventMask & SCALE_ON) {
                         this.emit(EventType.SCALE_CHANGED);
                     }
-
-                    cc.director.fastRender();
                 }
             },
         },
@@ -1085,6 +1071,7 @@ let NodeDefines = {
                         this._proxy.updateOpacity();
                     };
                     this._renderFlag |= RenderFlow.FLAG_OPACITY_COLOR;
+                    this.doRender();
                 }
             },
             range: [0, 255]
@@ -1110,6 +1097,7 @@ let NodeDefines = {
                     }
 
                     this._renderFlag |= RenderFlow.FLAG_COLOR;
+                    this.doRender();
 
                     if (this._eventMask & COLOR_ON) {
                         this.emit(EventType.COLOR_CHANGED, value);
@@ -1137,7 +1125,6 @@ let NodeDefines = {
                     if (this._eventMask & ANCHOR_ON) {
                         this.emit(EventType.ANCHOR_CHANGED);
                     }
-                    cc.director.fastRender();
                 }
             },
         },
@@ -1161,7 +1148,6 @@ let NodeDefines = {
                     if (this._eventMask & ANCHOR_ON) {
                         this.emit(EventType.ANCHOR_CHANGED);
                     }
-                    cc.director.fastRender();
                 }
             },
         },
@@ -1192,7 +1178,6 @@ let NodeDefines = {
                             this.emit(EventType.SIZE_CHANGED);
                         }
                     }
-                    cc.director.fastRender();
                 }
             },
         },
@@ -1223,7 +1208,6 @@ let NodeDefines = {
                             this.emit(EventType.SIZE_CHANGED);
                         }
                     }
-                    cc.director.fastRender();
                 }
             },
         },
@@ -1308,6 +1292,8 @@ let NodeDefines = {
         else {
             this._renderFlag = RenderFlow.FLAG_TRANSFORM | RenderFlow.FLAG_OPACITY_COLOR;
         }
+
+        this.doRender();
     },
 
     statics: {
@@ -1387,6 +1373,7 @@ let NodeDefines = {
         if (active) {
             // Refresh transform
             this._renderFlag |= RenderFlow.FLAG_WORLD_TRANSFORM;
+            this.doRender();
             // ActionManager & EventManager
             actionManager && actionManager.resumeTarget(this);
             eventManager.resumeTarget(this);
@@ -1415,6 +1402,7 @@ let NodeDefines = {
             this._parent._delaySort();
         }
         this._renderFlag |= RenderFlow.FLAG_WORLD_TRANSFORM;
+        this.doRender();
         this._onHierarchyChangedBase(oldParent);
         if (cc._widgetManager) {
             cc._widgetManager._nodesOrderDirty = true;
@@ -1534,6 +1522,7 @@ let NodeDefines = {
 
         if (CC_JSB && CC_NATIVERENDERER) {
             this._renderFlag |= RenderFlow.FLAG_TRANSFORM | RenderFlow.FLAG_OPACITY_COLOR;
+            this.doRender();
         }
     },
 
@@ -1575,6 +1564,7 @@ let NodeDefines = {
 
         if (children.length > 0) {
             this._renderFlag |= RenderFlow.FLAG_CHILDREN;
+            this.doRender();
         }
 
         if (CC_JSB && CC_NATIVERENDERER) {
@@ -1609,6 +1599,7 @@ let NodeDefines = {
 
         if (children.length > 0) {
             this._renderFlag |= RenderFlow.FLAG_CHILDREN;
+            this.doRender();
         }
 
         if (CC_JSB && CC_NATIVERENDERER) {
@@ -2348,7 +2339,7 @@ let NodeDefines = {
             }
         }
 
-        cc.director.fastRender();
+        this.doRender();
     },
 
     /**
@@ -2405,7 +2396,6 @@ let NodeDefines = {
             if (this._eventMask & SCALE_ON) {
                 this.emit(EventType.SCALE_CHANGED);
             }
-            cc.director.fastRender();
         }
     },
 
@@ -2472,7 +2462,7 @@ let NodeDefines = {
                     this._toEuler();
                 }
 
-                cc.director.fastRender();
+                this.doRender();
             }
         }
     },
@@ -2533,7 +2523,7 @@ let NodeDefines = {
                 this.emit(EventType.SIZE_CHANGED);
             }
         }
-        cc.director.fastRender();
+        this.doRender();
     },
 
     /**
@@ -2599,7 +2589,7 @@ let NodeDefines = {
         if (this._eventMask & ANCHOR_ON) {
             this.emit(EventType.ANCHOR_CHANGED);
         }
-        cc.director.fastRender();
+        this.doRender();
     },
 
     /*
@@ -2691,7 +2681,7 @@ let NodeDefines = {
                 this.emit(EventType.POSITION_CHANGED);
             }
         }
-        cc.director.fastRender();
+        this.doRender();
     },
 
     /*
@@ -2733,7 +2723,7 @@ let NodeDefines = {
             this._toEuler();
         }
         this.setLocalDirty(LocalDirtyFlag.ROTATION);
-        cc.director.fastRender();
+        this.doRender();
     },
 
     /*
@@ -2771,7 +2761,7 @@ let NodeDefines = {
         }
         trs.fromScale(this._trs, _swsVec3);
         this.setLocalDirty(LocalDirtyFlag.SCALE);
-        cc.director.fastRender();
+        this.doRender();
     },
 
     getWorldRT (out) {
@@ -2940,7 +2930,8 @@ let NodeDefines = {
         }
         else {
             this._renderFlag |= RenderFlow.FLAG_TRANSFORM;
-        }        
+        } 
+        this.doRender();    
     },
 
     setWorldDirty () {
@@ -3478,6 +3469,7 @@ let NodeDefines = {
         if (this._children.length > 0) {
             this._renderFlag |= RenderFlow.FLAG_CHILDREN;
         }
+        this.doRender();
     },
 
     onRestore: CC_EDITOR && function () {
@@ -3495,6 +3487,13 @@ let NodeDefines = {
             eventManager.pauseTarget(this);
         }
     },
+
+    doRender() {
+        if (this.beforeRenderCall) cc.director.addBeforeRenderCall(this.beforeRenderCall);
+        if (this.parent) this.parent.doRender();
+        else cc.director.doRender();
+    },
+    beforeRenderCall: null
 };
 
 if (CC_EDITOR) {

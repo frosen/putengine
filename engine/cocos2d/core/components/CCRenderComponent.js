@@ -99,6 +99,7 @@ let RenderComponent = cc.Class({
         this.node.on(cc.Node.EventType.ANCHOR_CHANGED, this._onNodeSizeDirty, this);
 
         this.node._renderFlag |= RenderFlow.FLAG_RENDER | RenderFlow.FLAG_UPDATE_RENDER_DATA | RenderFlow.FLAG_OPACITY_COLOR;
+        this.node.doRender();
     },
 
     onDisable () {
@@ -143,6 +144,7 @@ let RenderComponent = cc.Class({
         else if (!enable) {
             this.node._renderFlag &= ~RenderFlow.FLAG_UPDATE_RENDER_DATA;
         }
+        this.node.doRender();
     },
 
     markForRender (enable) {
@@ -152,10 +154,12 @@ let RenderComponent = cc.Class({
         else if (!enable) {
             this.node._renderFlag &= ~RenderFlow.FLAG_RENDER;
         }
+        this.node.doRender();
     },
 
     disableRender () {
         this.node._renderFlag &= ~(RenderFlow.FLAG_RENDER | RenderFlow.FLAG_UPDATE_RENDER_DATA);
+        this.node.doRender();
     },
 
     /**

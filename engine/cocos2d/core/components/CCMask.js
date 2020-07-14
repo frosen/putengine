@@ -298,6 +298,7 @@ let Mask = cc.Class({
         this.node.on(cc.Node.EventType.ANCHOR_CHANGED, this._updateGraphics, this);
 
         this.node._renderFlag |= RenderFlow.FLAG_POST_RENDER;
+        this.node.doRender();
         this._activateMaterial();
     },
 
@@ -311,6 +312,7 @@ let Mask = cc.Class({
         this.node.off(cc.Node.EventType.ANCHOR_CHANGED, this._updateGraphics, this);
         
         this.node._renderFlag &= ~RenderFlow.FLAG_POST_RENDER;
+        this.node.doRender();
     },
 
     onDestroy () {
@@ -517,6 +519,7 @@ let Mask = cc.Class({
         else if (!enable) {
             this.node._renderFlag &= ~RenderFlow.FLAG_UPDATE_RENDER_DATA;
         }
+        this.node.doRender();
     },
 
     markForRender (enable) {
@@ -527,11 +530,13 @@ let Mask = cc.Class({
         else if (!enable) {
             this.node._renderFlag &= ~(RenderFlow.FLAG_RENDER | RenderFlow.FLAG_POST_RENDER);
         }
+        this.node.doRender();
     },
 
     disableRender () {
         this.node._renderFlag &= ~(RenderFlow.FLAG_RENDER | RenderFlow.FLAG_UPDATE_RENDER_DATA | 
                                    RenderFlow.FLAG_POST_RENDER);
+        this.node.doRender();
     },
 });
 
